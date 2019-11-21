@@ -1,16 +1,18 @@
 <template>
-    <form class="form-inline" @submit.prevent="onSubmit">
-        <div class="form-group mb-2">
-            <input
+    <div class="input-group mb-3">
+        <input
                 type="text"
                 class="form-control"
-                id="taskTitle"
                 placeholder="Title"
                 v-model="title"
-            >
+        />
+        <div
+                @click="onSubmit"
+                class="input-group-append"
+        >
+            <button type="submit" class="btn btn-primary mb-2">Add task</button>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Add task</button>
-    </form>
+    </div>
 </template>
 
 <script>
@@ -23,9 +25,9 @@
         methods: {
             onSubmit() {
                 if (this.title) {
-                    this.$emit('create-task', {
+                    this.$emit('task-submitted', {
                         title: this.title,
-                        date: Date.now(),
+                        id: Date.now(),
                         completed: false
                     });
                     this.title = '';

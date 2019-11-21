@@ -15,9 +15,9 @@
       </div>
     </b-row>
     <b-row class="justify-content-md-center p-2">
-      <button v-on:click="onSave" type="button" class="btn btn-success">Save</button>
+      <button @click="onSave" type="button" class="btn btn-success">Save</button>
       <button
-        v-on:click="onCancel"
+        @click="onCancel"
         type="button"
         class="btn btn-danger"
       >Cancel</button>
@@ -43,16 +43,15 @@
     },
     methods: {
       onSave() {
-        console.log(this.title);
         this.$store.dispatch('changeTitle', {
           date: this.task.date,
           title: this.title
         }).then(() => {
-          this.$router.push('/');
+          this.$router.back();
         });
       },
       onCancel() {
-        this.$router.push('/');
+        this.$router.back();
       },
     },
     components: {}

@@ -1,28 +1,29 @@
 <template>
-  <li class="list-group-item" v-bind:class="{completed: task.completed}">
-    <div class="row">
-      <div class="col-1">
-        <input
-          v-on:change="$emit('check-task', task.date)"
-          type="checkbox"
-          :checked="task.completed"
-        >
-      </div>
-      <div
-        v-on:click="$emit('edit-task', task.date)"
-        class="col-8 title-col"
+  <li
+      class="list-group-item"
+      :class="{completed: task.completed}"
+  >
+    <div>
+      <input
+              v-on:change="$emit('task-checked', task.id)"
+              type="checkbox"
+              :checked="task.completed"
       >
-        {{task.title}}
-      </div>
-      <div class="col-3 delete-col">
-        <button
-          v-on:click="$emit('remove-task', task.date)"
-          type="button"
-          class="btn btn-outline-danger btn-sm"
-        >
-          Delete
-        </button>
-      </div>
+    </div>
+    <div
+            @click="$emit('task-edited', task.id)"
+            class="col-8 title-col"
+    >
+      {{task.title}}
+    </div>
+    <div>
+      <button
+              @click="$emit('task-removed', task.id)"
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+      >
+        Delete
+      </button>
     </div>
   </li>
 </template>
@@ -42,11 +43,7 @@
     text-decoration: line-through;
   }
   .title-col {
-    max-width: 60%;
-    text-overflow: ellipsis;
-    overflow: hidden
   }
   .delete-col {
-    padding: 0;
   }
 </style>

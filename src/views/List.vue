@@ -1,40 +1,30 @@
 <template>
   <b-container>
-    <b-row class="justify-content-md-center p-2">
-      <h4>Tasks</h4>
-    </b-row>
-    <b-row class="justify-content-md-center p-2">
-      <CreateTask
-        @create-task="createTask"
+    <h4>Tasks</h4>
+    <CreateTask
+            @task-submitted="createTask"
+    />
+    <ul
+            v-if="tasks.length"
+    >
+      <TodoItem
+              v-for="item of visibleTasks"
+              v-bind:task="item"
+              v-bind:key="item.id"
+              @task-removed="removeTask"
+              @task-checked="checkTask"
+              @task-edited="editTask"
       />
-    </b-row>
-    <b-row class="justify-content-md-center p-2">
-      <ul
-        v-if="tasks.length"
-        class="list-group .col-12"
-        style="min-width: 300px;"
-      >
-        <TodoItem
-          v-for="item of visibleTasks"
-          v-bind:task="item"
-          v-bind:key="item.date"
-          @remove-task="removeTask"
-          @check-task="checkTask"
-          @edit-task="editTask"
-        />
-      </ul>
-      <div v-else>
-        No tasks
-      </div>
-    </b-row>
-    <b-row class="justify-content-md-center p-2">
-      <Pagination
-        v-bind:tasks="tasks"
-        @page-update="updatePage"
-        v-bind:currentPage="currentPage"
-        v-bind:pageSize="pageSize"
-      />
-    </b-row>
+    </ul>
+    <div v-else>
+      No tasks
+    </div>
+    <Pagination
+            @page-selected="updatePage"
+            v-bind:tasksTotal="tasks.length"
+            v-bind:currentPage="currentPage"
+            v-bind:tasksPerPage="tasksPerPage"
+    />
   </b-container>
 </template>
 
@@ -52,7 +42,7 @@
     data() {
       return {
         currentPage: parseInt(this.$route.params.page, 10) || 1,
-        pageSize: 5,
+        tasksPerPage: 5,
         visibleTasks: []
       }
     },
@@ -65,13 +55,13 @@
           this.updatePage(1);
         });
       },
-      removeTask(taskDate) {
-        this.$store.dispatch('deleteTask', taskDate).then(() => {
+      removeTask(id) {
+        this.$store.dispatch('deleteTask', id).then(() => {
           this.updateVisibleTasks();
         });
       },
-      checkTask(taskDate) {
-        this.$store.dispatch('checkTask', taskDate).then(() => {
+      checkTask(id) {
+        this.$store.dispatch('checkTask', id).then(() => {
           this.updateVisibleTasks();
         });
       },
@@ -86,10 +76,14 @@
         }
       },
       updateVisibleTasks() {
-        this.visibleTasks = this.tasks.slice((this.currentPage - 1)* this.pageSize, ((this.currentPage - 1) * this.pageSize) + this.pageSize);
+        const currentTaskIndex = (this.currentPage - 1) * this.tasksPerPage;
+
+        this.visibleTasks = this.tasks.slice(currentTaskIndex, currentTaskIndex + this.tasksPerPage);
 
         if (this.visibleTasks.length === 0 && this.currentPage > 1) {
-          this.updatePage(this.currentPage - 1);
+          const lastPage = Math.ceil(this.tasks.length / this.tasksPerPage);
+
+          this.updatePage(lastPage);
         }
       }
     },

@@ -5,33 +5,32 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tasks: JSON.parse(localStorage.getItem('tasks') || '[]').sort((a, b) => a.date > b.date)
+    tasks: JSON.parse(localStorage.getItem('tasks') || '[]')
   },
   mutations: {
     createTask(state, task) {
       state.tasks.push(task);
       localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
-    deleteTask(state, taskDate) {
-      state.tasks = state.tasks.filter((task) => task.date !== taskDate);
+    deleteTask(state, id) {
+      state.tasks = state.tasks.filter((task) => task.id !== id);
       localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
-    checkTask(state, taskDate) {
-      state.tasks = state.tasks.map((task) => {
-        if (task.date === taskDate) {
+    checkTask(state, id) {
+      state.tasks.some((task) => {
+        if (task.id === id) {
           task.completed = !task.completed;
+          return true;
         }
-        return task;
       });
       localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
     changeTitle(state, editData) {
-      console.log('changeTitle', editData);
-      state.tasks = state.tasks.map((task) => {
-        if (task.date === editData.date) {
+      state.tasks.some((task) => {
+        if (task.id === editData.id) {
           task.title = editData.title;
+          return true;
         }
-        return task;
       });
       localStorage.setItem('tasks', JSON.stringify(state.tasks));
     },
@@ -43,19 +42,22 @@ export default new Vuex.Store({
     deleteTask({commit}, taskDate) {
       commit('deleteTask', taskDate);
     },
-    checkTask({commit}, taskDate) {
-      commit('checkTask', taskDate);
+    checkTask({commit}, id) {
+      commit('checkTask', id);
     },
     changeTitle({commit}, editData) {
       commit('changeTitle', editData);
     },
   },
-  modules: {
-  },
   getters: {
-    tasks: state => state.tasks,
-    getTask: state => date => {
-      return state.tasks.find(task => String(task.date) === date) || false;
+    tasks: state => {
+      return state.tasks;
+    },
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done);
+    },
+    getTask: state => id => {
+      return state.tasks.find(task => String(task.id) === id) || false;
     }
   }
 });
