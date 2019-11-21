@@ -51,10 +51,10 @@ export default new Vuex.Store({
   },
   getters: {
     tasks: state => {
-      return state.tasks.reverse();
+      return state.tasks.slice().sort((a, b) => a.id < b.id);
     },
     getTask: state => id => {
-      return state.tasks.find(task => String(task.id) === id) || false;
+      return state.tasks.find(task => task.id === id) || false;
     }
   }
 });

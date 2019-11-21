@@ -10,7 +10,9 @@
                 @click="onClickCreate"
                 class="input-group-append"
         >
-            <button type="submit" class="btn btn-primary mb-2">Add task</button>
+            <button type="submit" class="btn btn-primary mb-2">
+                Add task
+            </button>
         </div>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <nav v-if="totalPages > 1">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
             <li
                 class="page-item"
                 :class="{disabled: !showPreviousLink}"
@@ -51,7 +51,7 @@
                 return this.currentPage > 1;
             },
             showNextLink() {
-                return this.currentPage !== this.totalPages;
+                return this.currentPage < this.totalPages;
             }
         },
         methods: {

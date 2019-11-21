@@ -1,36 +1,41 @@
 <template>
   <b-container>
-    <b-row class="justify-content-md-center p-2">
-      <h4>Edit title</h4>
-    </b-row>
-    <b-row class="justify-content-md-center p-2">
-      <div class="form-group mb-2">
-        <input
-          type="text"
-          class="form-control"
-          id="taskTitle"
-          placeholder="Title"
-          v-model="title"
+    <h4 class="mt-2">Editing</h4>
+    <div class="form-group mb-2">
+      <input
+              type="text"
+              class="form-control"
+              id="taskTitle"
+              placeholder="Title"
+              v-model="title"
+      />
+    </div>
+    <div class="text-center">
+      <div class="btn-group">
+        <button
+                @click="onClickSave"
+                type="button"
+                class="btn btn-success"
         >
+          Save
+        </button>
+        <button
+                @click="onClickCancel"
+                type="button"
+                class="btn btn-danger"
+        >
+          Cancel
+        </button>
       </div>
-    </b-row>
-    <b-row class="justify-content-md-center p-2">
-      <button @click="onSave" type="button" class="btn btn-success">Save</button>
-      <button
-        @click="onCancel"
-        type="button"
-        class="btn btn-danger"
-      >Cancel</button>
-    </b-row>
+    </div>
   </b-container>
 </template>
 
 <script>
   export default {
-    name: 'EditToDo',
     computed: {
       task() {
-        return this.$store.getters.getTask(this.$route.params.id);
+        return this.$store.getters.getTask(parseInt(this.$route.params.id, 10));
       }
     },
     beforeMount: function() {
@@ -42,7 +47,7 @@
       }
     },
     methods: {
-      onSave() {
+      onClickSave() {
         this.$store.dispatch('changeTitle', {
           id: this.task.id,
           title: this.title
@@ -50,7 +55,7 @@
           this.$router.back();
         });
       },
-      onCancel() {
+      onClickCancel() {
         this.$router.back();
       },
     },

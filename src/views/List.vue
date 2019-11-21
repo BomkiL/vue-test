@@ -1,10 +1,8 @@
 <template>
   <b-container>
-    <h4>Tasks</h4>
-    <CreateTask
-            @task-submitted="createTask"
-    />
-    <ul v-if="tasks.length" class="list-group">
+    <h4 class="mt-2">Tasks</h4>
+    <CreateTask @task-submitted="createTask" />
+    <ul v-if="tasks.length" class="list-group mb-3">
       <TodoItem
               v-for="item of visibleTasks"
               v-bind:task="item"
@@ -14,9 +12,7 @@
               @task-edited="editTask"
       />
     </ul>
-    <div v-else>
-      No tasks
-    </div>
+    <div v-else>No tasks</div>
     <Pagination
             @page-selected="updatePage"
             v-bind:tasksTotal="tasks.length"
@@ -69,6 +65,7 @@
       updatePage(pageNumber) {
         this.currentPage = pageNumber;
         this.updateVisibleTasks();
+
         if (this.$route.params.page !== String(pageNumber)) {
           this.$router.push(`/page/${pageNumber}`);
         }
