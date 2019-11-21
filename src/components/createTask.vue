@@ -7,7 +7,7 @@
                 v-model="title"
         />
         <div
-                @click="onSubmit"
+                @click="onClickCreate"
                 class="input-group-append"
         >
             <button type="submit" class="btn btn-primary mb-2">Add task</button>
@@ -23,8 +23,8 @@
             }
         },
         methods: {
-            onSubmit() {
-                if (this.title) {
+            onClickCreate() {
+                if (this.title.trim()) {
                     this.$emit('task-submitted', {
                         title: this.title,
                         id: Date.now(),

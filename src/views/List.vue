@@ -4,9 +4,7 @@
     <CreateTask
             @task-submitted="createTask"
     />
-    <ul
-            v-if="tasks.length"
-    >
+    <ul v-if="tasks.length" class="list-group">
       <TodoItem
               v-for="item of visibleTasks"
               v-bind:task="item"
@@ -65,8 +63,8 @@
           this.updateVisibleTasks();
         });
       },
-      editTask(taskDate) {
-        this.$router.push(`/edit-to-do/${taskDate}`);
+      editTask(id) {
+        this.$router.push(`/edit-to-do/${id}`);
       },
       updatePage(pageNumber) {
         this.currentPage = pageNumber;

@@ -51,10 +51,7 @@ export default new Vuex.Store({
   },
   getters: {
     tasks: state => {
-      return state.tasks;
-    },
-    doneTodos: state => {
-      return state.todos.filter(todo => todo.done);
+      return state.tasks.reverse();
     },
     getTask: state => id => {
       return state.tasks.find(task => String(task.id) === id) || false;

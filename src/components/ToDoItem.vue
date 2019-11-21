@@ -1,22 +1,21 @@
 <template>
-  <li
-      class="list-group-item"
-      :class="{completed: task.completed}"
-  >
-    <div>
+  <li class="list-group-item list-item_container">
+    <div :class="{completed: task.completed}">
       <input
-              v-on:change="$emit('task-checked', task.id)"
+              @change="$emit('task-checked', task.id)"
               type="checkbox"
               :checked="task.completed"
-      >
-    </div>
-    <div
-            @click="$emit('task-edited', task.id)"
-            class="col-8 title-col"
-    >
+      />
       {{task.title}}
     </div>
-    <div>
+    <div class="btn-group">
+      <button
+              @click="$emit('task-edited', task.id)"
+              type="button"
+              class="btn btn-outline-warning btn-sm"
+      >
+        Edit
+      </button>
       <button
               @click="$emit('task-removed', task.id)"
               type="button"
@@ -42,8 +41,10 @@
   .completed {
     text-decoration: line-through;
   }
-  .title-col {
-  }
-  .delete-col {
+
+  .list-item_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>

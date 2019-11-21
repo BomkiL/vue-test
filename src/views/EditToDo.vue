@@ -44,7 +44,7 @@
     methods: {
       onSave() {
         this.$store.dispatch('changeTitle', {
-          date: this.task.date,
+          id: this.task.id,
           title: this.title
         }).then(() => {
           this.$router.back();
@@ -54,6 +54,5 @@
         this.$router.back();
       },
     },
-    components: {}
   }
 </script>
