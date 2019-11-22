@@ -3,7 +3,7 @@
     <h4 class="mt-2">Tasks</h4>
     <CreateTask @task-submitted="createTask" />
     <Loader v-if="loading" />
-    <ul v-else-if="tasks.length" class="list-group mb-3">
+    <ul v-else-if="tasksTotal" class="list-group mb-3">
       <TodoItem
               v-for="item of visibleTasks"
               v-bind:task="item"
@@ -16,7 +16,7 @@
     <div v-else>No tasks</div>
     <Pagination
             @page-selected="updatePage"
-            v-bind:tasksTotal="tasks.length"
+            v-bind:tasksTotal="tasksTotal"
             v-bind:currentPage="currentPage"
             v-bind:tasksPerPage="tasksPerPage"
     />
@@ -31,6 +31,9 @@
   export default {
     name: 'List',
     computed: {
+      tasksTotal() {
+        return this.$store.getters.getTasksTotal;
+      },
       tasks() {
         return this.$store.getters.tasks;
       }
@@ -81,7 +84,7 @@
         this.loading = false;
 
         if (this.visibleTasks.length === 0 && this.currentPage > 1) {
-          const lastPage = Math.ceil(this.tasks.length / this.tasksPerPage);
+          const lastPage = Math.ceil(this.tasksTotal / this.tasksPerPage);
 
           this.updatePage(lastPage);
         }

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import firebase from 'firebase/app'
 
 Vue.use(Vuex);
 
@@ -48,10 +49,16 @@ export default new Vuex.Store({
     changeTitle({commit}, editData) {
       commit('changeTitle', editData);
     },
+    async fetchData() {
+      const data = await firebase.database().ref('tasks');
+    }
   },
   getters: {
     tasks: state => {
       return state.tasks.slice().sort((a, b) =>  b.id - a.id);
+    },
+    getTasksTotal: state => {
+      return state.tasks.length;
     },
     getTask: state => id => {
       return state.tasks.find(task => task.id === id) || false;
