@@ -1,6 +1,6 @@
 <template>
-  <b-container>
-    <h4 class="mt-2">Tasks</h4>
+  <b-container class="container-wrapper">
+    <h4 class="mt-4">Tasks</h4>
     <CreateTask @task-submitted="createTask" />
     <Loader v-if="loading" />
     <ul v-else-if="tasks.length" class="list-group mb-3">
@@ -95,3 +95,9 @@
     }
   }
 </script>
+
+<style>
+  .container-wrapper.container {
+    max-width: 600px;
+  }
+</style>
