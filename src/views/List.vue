@@ -2,7 +2,8 @@
   <b-container>
     <h4 class="mt-2">Tasks</h4>
     <CreateTask @task-submitted="createTask" />
-    <ul v-if="tasks.length" class="list-group mb-3">
+    <Loader v-if="loading" />
+    <ul v-else-if="tasks.length" class="list-group mb-3">
       <TodoItem
               v-for="item of visibleTasks"
               v-bind:task="item"
@@ -26,6 +27,7 @@
   import CreateTask from './../components/createTask';
   import TodoItem from './../components/ToDoItem';
   import Pagination from './../components/Pagination';
+  import Loader from './../components/Loader';
   export default {
     name: 'List',
     computed: {
@@ -37,7 +39,8 @@
       return {
         currentPage: parseInt(this.$route.params.page, 10) || 1,
         tasksPerPage: 5,
-        visibleTasks: []
+        visibleTasks: [],
+        loading: true,
       }
     },
     beforeMount() {
@@ -73,7 +76,9 @@
       updateVisibleTasks() {
         const currentTaskIndex = (this.currentPage - 1) * this.tasksPerPage;
 
+        this.loading = true;
         this.visibleTasks = this.tasks.slice(currentTaskIndex, currentTaskIndex + this.tasksPerPage);
+        this.loading = false;
 
         if (this.visibleTasks.length === 0 && this.currentPage > 1) {
           const lastPage = Math.ceil(this.tasks.length / this.tasksPerPage);
@@ -85,7 +90,8 @@
     components: {
       CreateTask,
       TodoItem,
-      Pagination
+      Pagination,
+      Loader
     }
   }
 </script>

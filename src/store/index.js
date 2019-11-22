@@ -51,7 +51,7 @@ export default new Vuex.Store({
   },
   getters: {
     tasks: state => {
-      return state.tasks.slice().sort((a, b) => a.id < b.id);
+      return state.tasks.slice().sort((a, b) =>  b.id - a.id);
     },
     getTask: state => id => {
       return state.tasks.find(task => task.id === id) || false;
