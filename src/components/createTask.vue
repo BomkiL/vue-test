@@ -2,7 +2,7 @@
     <div class="input-group mb-3">
         <input
                 type="text"
-                class="form-control"
+                class="form-control shadow-none"
                 placeholder="Title"
                 v-model="title"
         />
@@ -27,11 +27,7 @@
         methods: {
             onClickCreate() {
                 if (this.title.trim()) {
-                    this.$emit('task-submitted', {
-                        title: this.title,
-                        id: Date.now(),
-                        completed: false
-                    });
+                    this.$emit('task-submitted', this.title);
                     this.title = '';
                 }
             }

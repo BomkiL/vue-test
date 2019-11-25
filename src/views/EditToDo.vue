@@ -1,10 +1,10 @@
 <template>
-  <b-container>
+  <b-container class="container-wrapper">
     <h4 class="mt-2">Editing</h4>
     <div class="form-group mb-2">
       <input
               type="text"
-              class="form-control"
+              class="form-control shadow-none"
               id="taskTitle"
               placeholder="Title"
               v-model="title"
@@ -35,7 +35,7 @@
   export default {
     computed: {
       task() {
-        return this.$store.getters.getTask(parseInt(this.$route.params.id, 10));
+        return this.$store.getters.getTask(this.$route.params.id);
       }
     },
     beforeMount: function() {
@@ -48,9 +48,10 @@
     },
     methods: {
       onClickSave() {
-        this.$store.dispatch('changeTitle', {
+        this.$store.dispatch('updateTask', {
           id: this.task.id,
-          title: this.title
+          title: this.title,
+          completed: this.task.completed,
         }).then(() => {
           this.$router.back();
         });

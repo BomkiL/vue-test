@@ -1,8 +1,11 @@
 <template>
   <li class="list-group-item list-item_container">
-    <div :class="{completed: task.completed}">
+    <div
+            class="list-item_title"
+            :class="{completed: task.completed}"
+    >
       <input
-              @change="$emit('task-checked', task.id)"
+              @change="$emit('task-checked', { id: task.id, completed: !task.completed, title: task.title })"
               type="checkbox"
               :checked="task.completed"
       />
@@ -46,5 +49,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .list-item_title {
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .list-item_container input {
+    vertical-align: middle;
   }
 </style>

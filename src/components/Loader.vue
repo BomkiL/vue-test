@@ -1,5 +1,5 @@
 <template>
-    <div class="sbl-circ-path"></div>
+    <div class="sbl-circ-path mx-auto my-2"></div>
 </template>
 
 <style>
@@ -8,7 +8,7 @@
         width: 48px;
         color: rgba(90, 90, 90, 0.2);
         position: relative;
-        display: inline-block;
+        display: block;
         border: 5px solid;
         border-radius: 50%;
         border-right-color: #5a5a5a;
