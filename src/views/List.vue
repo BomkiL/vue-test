@@ -37,8 +37,7 @@
     },
     created() {
       this.$store.dispatch('fetchTasks').then(() => {
-        // this.updatePage(this.$store.state.pageNumber);
-        this.updatePage(parseInt(this.$route.params.page, 10));
+        this.updatePage(parseInt(this.$route.params.page, 10) || 1);
       });
     },
     methods: {
